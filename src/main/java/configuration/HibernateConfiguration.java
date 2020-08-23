@@ -1,6 +1,7 @@
 package configuration;
 
 import Entity.MovieEntity;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -12,7 +13,9 @@ public class HibernateConfiguration {
 
     private static Logger logger = LoggerFactory.getLogger(HibernateConfiguration.class);
 
-    public static void main(String[] args) {
+    private static SessionFactory sessionFactory;
+
+    public void main(String[] args) {
 
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
@@ -20,16 +23,5 @@ public class HibernateConfiguration {
         SessionFactory sessionFactory = configuration.buildSessionFactory();
         Session session = sessionFactory.openSession();
 
-        save(session);
-
     }
-
-    public static void save(Session session) {
-        Transaction transaction = session.beginTransaction();
-        MovieEntity movieEntity = new MovieEntity("Top Gun","Tony Scott","USA",1986);
-        session.save(movieEntity);
-        transaction.commit();
-        session.close();
-    }
-
 }

@@ -81,10 +81,4 @@ public class MovieEntity {
         this.id = id;
     }
 
-    //    public void save(MovieEntity movieEntity){
-//        SessionFactory sessionFactory;
-//        Session session = null;
-//
-//    }
-
 }
