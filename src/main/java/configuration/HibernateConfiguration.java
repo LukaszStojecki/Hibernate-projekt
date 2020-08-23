@@ -20,12 +20,16 @@ public class HibernateConfiguration {
         SessionFactory sessionFactory = configuration.buildSessionFactory();
         Session session = sessionFactory.openSession();
 
-//        Transaction transaction = session.beginTransaction();
-//        MovieEntity movieEntity = new MovieEntity("Top Gun","Tony Scott","USA",1986);
-//        session.save(movieEntity);
-//        transaction.commit();
-//        session.close();
+        save(session);
 
+    }
+
+    public static void save(Session session) {
+        Transaction transaction = session.beginTransaction();
+        MovieEntity movieEntity = new MovieEntity("Top Gun","Tony Scott","USA",1986);
+        session.save(movieEntity);
+        transaction.commit();
+        session.close();
     }
 
 }
