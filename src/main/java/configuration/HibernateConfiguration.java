@@ -1,5 +1,6 @@
 package configuration;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
@@ -7,13 +8,16 @@ import org.slf4j.LoggerFactory;
 
 public class HibernateConfiguration {
 
-    private static Logger logger = LoggerFactory.getLogger(HibernateConfiguration.class);
+    //private static Logger logger = LoggerFactory.getLogger(HibernateConfiguration.class);
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
-        SessionFactory sessionFactory = new Configuration()
-                .configure("hibernate.cfg.xml")
-                .buildSessionFactory();
+        Configuration configuration = new Configuration();
+        configuration.configure("hibernate.cfg.xml");
+
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
+        Session session = sessionFactory.openSession();
+
     }
 
 }

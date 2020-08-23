@@ -9,5 +9,13 @@
             <property name="connection.username">root</property>
             <property name="connection.password">q1we2rty3</property>
             <property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
+            <property name="connection.pool_size">1</property>
+            <!-- wyświetlamy na konsolę wszystkie zapytania SQL, które wywołuje dla nas Hibernate -->
+            <property name="show_sql">true</property>
+            <!-- http://docs.jboss.org/hibernate/orm/5.0/userguide/html_single/Hibernate_User_Guide.html#configurations-hbmddl -->
+            <!-- opcja 'create' = usuń i odwtórz strukturę bazy danych przy starcie aplikacji, inne opcje: 'create-only', 'create-drop', 'drop', 'none' -->
+            <property name="hbm2ddl.auto">create</property>
+            <!-- SQL dialekt -->
+            <property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
         </session-factory>
     </hibernate-configuration>
