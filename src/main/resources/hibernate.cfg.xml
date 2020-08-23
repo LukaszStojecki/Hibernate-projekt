@@ -17,5 +17,6 @@
             <property name="hbm2ddl.auto">create</property>
             <!-- SQL dialekt -->
             <property name="dialect">org.hibernate.dialect.MySQL8Dialect</property>
+            <mapping class="Entity.MovieEntity"/>
         </session-factory>
     </hibernate-configuration>
