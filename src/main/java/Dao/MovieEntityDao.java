@@ -24,8 +24,10 @@ public class MovieEntityDao {
     public static void main(String[] args) {
         MovieEntityDao dao = new MovieEntityDao();
         MovieEntity movieEntity = new MovieEntity("Top Gun","Tony Scott","USA",1986);
+        MovieEntity movieEntity1 = new MovieEntity("Golden Eye","Martin Campbell","USA",1995);
         //zad5
         Integer id = dao.save(movieEntity);
+        Integer id1 = dao.save(movieEntity1);
         //zad 6
         List<MovieEntity> entities = dao.readAll();
         entities.forEach(System.out::println);
