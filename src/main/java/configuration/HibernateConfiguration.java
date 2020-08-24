@@ -11,8 +11,6 @@ import org.slf4j.LoggerFactory;
 
 public class HibernateConfiguration {
 
-    private static Logger logger = LoggerFactory.getLogger(HibernateConfiguration.class);
-
     private static SessionFactory sessionFactory;
 
     public void main(String[] args) {
@@ -22,6 +20,8 @@ public class HibernateConfiguration {
 
         SessionFactory sessionFactory = configuration.buildSessionFactory();
         Session session = sessionFactory.openSession();
+
+        session.close();
 
     }
 }

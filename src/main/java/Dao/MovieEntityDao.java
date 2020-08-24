@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,23 +19,9 @@ import java.util.List;
 
 public class MovieEntityDao {
 
-
     private static SessionFactory sessionFactory;
 
-    public static void main(String[] args) {
-        MovieEntityDao dao = new MovieEntityDao();
-        MovieEntity movieEntity = new MovieEntity("Top Gun","Tony Scott","USA",1986);
-        MovieEntity movieEntity1 = new MovieEntity("Golden Eye","Martin Campbell","USA",1995);
-        //zad5
-        Integer id = dao.save(movieEntity);
-        Integer id1 = dao.save(movieEntity1);
-        //zad 6
-        List<MovieEntity> entities = dao.readAll();
-        entities.forEach(System.out::println);
-    }
-
     public MovieEntityDao() {
-
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure("hibernate.cfg.xml")
                 .build();
@@ -48,39 +35,47 @@ public class MovieEntityDao {
         }
     }
 
-    public Integer save(MovieEntity movieEntity) {
-        Session session = null;
-        Integer id = null;
+    public void save(MovieEntity movieEntity) {
         try {
-            session = sessionFactory.openSession();
+            Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
-            id = (Integer) session.save(movieEntity);
-            transaction.commit();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();
+            session.save(movieEntity);
+            MovieEntity movieEntity1 = session.get(MovieEntity.class,movieEntity.getId());
+            if (movieEntity.getTitle().equals(movieEntity1.getTitle())){
+                movieEntity1.setTitle("TOPPER");
             }
+            session.saveOrUpdate(movieEntity1);
+            transaction.commit();
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return id;
     }
 
     public List<MovieEntity> readAll() {
-        Session session = null;
         List<MovieEntity> entities = new ArrayList<>();
-        try {
-            session = sessionFactory.openSession();
-            Query<MovieEntity> query = session.createQuery("FROM MovieEntity");
-            entities = query.list();
+        try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
+            Query<MovieEntity> entities1 = session.createQuery("FROM MovieEntity");
+            entities = entities1.list();
+            transaction.commit();
         } catch (HibernateException e) {
             e.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
         return entities;
+    }
+
+    public void delete(MovieEntity movieEntity) {
+        try {
+            Session session = sessionFactory.openSession();
+            Transaction transaction = session.beginTransaction();
+            MovieEntity deleteMovie = session.get(MovieEntity.class,movieEntity.getId());
+            session.delete(deleteMovie);
+            transaction.commit();
+            session.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }
