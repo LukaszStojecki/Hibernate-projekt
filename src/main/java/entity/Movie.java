@@ -1,14 +1,16 @@
-package Entity;
+package entity;
 
 
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
 
 @Entity
 @Table(name = "Movie")
 
-public class MovieEntity {
+public class Movie {
 
     private Integer id;
     private String title;
@@ -16,16 +18,21 @@ public class MovieEntity {
     private String productionCountry;
     private Integer productionYear;
 
+    @OneToMany
+    @JoinColumn(name = "genre_id")
+    private List<Genre> genre;
 
-    public MovieEntity() {
+
+    public Movie() {
     }
 
-    public MovieEntity(String title, String director, String productionCountry, Integer productionYear) {
+    public Movie( String title, String director, String productionCountry, Integer productionYear) {
         this.title = title;
         this.director = director;
         this.productionCountry = productionCountry;
         this.productionYear = productionYear;
     }
+
     @Id
     @GeneratedValue(generator = "increment")
     @GenericGenerator(name ="increment", strategy = "increment")
