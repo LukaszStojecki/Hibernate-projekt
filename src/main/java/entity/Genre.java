@@ -1,24 +1,26 @@
 package entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "Genre")
 public class Genre {
-    
     @Id
     @GeneratedValue(generator = "increment")
+    @GenericGenerator(name ="increment", strategy = "increment")
     private Integer id;
 
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private GenreType genreType;
 
     public Genre() {
     }
 
-
-    public Genre( String name) {
-        this.name = name;
+    public Genre(GenreType genreType) {
+        this.genreType = genreType;
     }
 
     public Integer getId() {
@@ -29,11 +31,11 @@ public class Genre {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public GenreType getGenreType() {
+        return genreType;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setGenreType(GenreType genreType) {
+        this.genreType = genreType;
     }
 }

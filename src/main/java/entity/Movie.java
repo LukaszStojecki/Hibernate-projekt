@@ -4,6 +4,7 @@ package entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -12,34 +13,41 @@ import java.util.List;
 
 public class Movie {
 
+    @Column(insertable = false, updatable = false, columnDefinition="serial")
     private Integer id;
+    @Id
     private String title;
     private String director;
     private String productionCountry;
     private Integer productionYear;
 
-    @OneToMany
-    @JoinColumn(name = "genre_id")
-    private List<Genre> genre;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Genre> genreTypes;
 
+
+    public List<Genre> getGenreTypes() {
+        return genreTypes;
+    }
+
+    public void setGenreTypes(List<Genre> genreTypes) {
+        this.genreTypes = genreTypes;
+    }
 
     public Movie() {
     }
 
-    public Movie( String title, String director, String productionCountry, Integer productionYear) {
+    public Movie(String title, String director, String productionCountry, Integer productionYear, List<Genre> genreTypes) {
         this.title = title;
         this.director = director;
         this.productionCountry = productionCountry;
         this.productionYear = productionYear;
+        this.genreTypes =genreTypes;
     }
 
-    @Id
-    @GeneratedValue(generator = "increment")
-    @GenericGenerator(name ="increment", strategy = "increment")
-    @Column(name = "movie_id")
     public Integer getId() {
         return id;
     }
+
 
     @Column(name = "Title")
     public String getTitle() {
@@ -76,11 +84,13 @@ public class Movie {
 
     @Override
     public String toString() {
-        return "MovieEntity{" +
-                "Title='" + title + '\'' +
-                ", Director='" + director + '\'' +
-                ", ProductionCountry='" + productionCountry + '\'' +
-                ", ProductionYear=" + productionYear +
+        return "Movie{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", director='" + director + '\'' +
+                ", productionCountry='" + productionCountry + '\'' +
+                ", productionYear=" + productionYear +
+                ", genreTypes=" + genreTypes +
                 '}';
     }
 

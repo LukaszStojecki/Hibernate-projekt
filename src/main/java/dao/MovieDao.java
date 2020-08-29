@@ -13,17 +13,11 @@ import java.util.List;
 public class MovieDao {
 
     public void save(Movie movie) {
+
         try {
             Session session = HibernateConfiguration.getSessionFactory().openSession();
             Transaction transaction = session.beginTransaction();
-            session.save(movie);
-//            transaction.commit();
-//            transaction = session.beginTransaction();
-//            Movie movie1 = session.get(Movie.class, movie.getId());
-//            if (movie.getTitle().equals(movie1.getTitle())){
-//                movie.setTitle("TOPPER");
-//            }
-//            session.saveOrUpdate(movie1);
+            session.saveOrUpdate(movie);
             transaction.commit();
             session.close();
         } catch (Exception e) {
