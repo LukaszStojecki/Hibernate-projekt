@@ -35,8 +35,6 @@ public class Actor {
     public Actor() {
     }
 
-
-
     public void addMovie(Movie movie){
         movies.add(movie);
         movie.getActors().add(this);

@@ -34,6 +34,10 @@ public class Movie {
     private List<Actor> actors = new ArrayList<>();
 
     public Movie() {
+
+    }
+    public  Movie(String title){
+        this.title=title;
     }
 
     public Movie(String title, String director, String productionCountry, Integer productionYear, List<Review> reviews) {

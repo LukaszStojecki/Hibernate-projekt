@@ -1,5 +1,6 @@
 package hibernateApp;
 
+import configuration.HibernateConfiguration;
 import dao.ActorDao;
 import dao.MovieDao;
 import entity.*;
@@ -11,6 +12,7 @@ public class HibernateApplication {
     public static void main(String[] args) {
 
         MovieDao movieDao = new MovieDao();
+        movieDao.setSessionFactory(HibernateConfiguration.getSessionFactory());
         //GenreDao genreDao = new GenreDao();
         ActorDao actorDao = new ActorDao();
 
