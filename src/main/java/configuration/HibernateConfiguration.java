@@ -13,13 +13,14 @@ public class HibernateConfiguration {
     private static SessionFactory sessionFactory;
 
     public static SessionFactory getSessionFactory() {
-
-        try {
-            sessionFactory = new Configuration()
-                    .configure("hibernate.cfg.xml")
-                    .buildSessionFactory();
-        } catch (HibernateException e) {
-            e.printStackTrace();
+        if (sessionFactory == null){
+            try {
+                sessionFactory = new Configuration()
+                        .configure("hibernate.cfg.xml")
+                        .buildSessionFactory();
+            } catch (HibernateException e) {
+                e.printStackTrace();
+            }
         }
         return sessionFactory;
     }

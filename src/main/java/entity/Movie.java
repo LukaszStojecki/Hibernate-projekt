@@ -1,19 +1,19 @@
 package entity;
 
 
+import dao.MovieDao;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
-@Table(name = "Movie")
-
 public class Movie {
 
-    @Column(insertable = false, updatable = false, columnDefinition="serial")
+    @Column(insertable = false, updatable = false, columnDefinition = "serial", unique = true)
     private Integer id;
     @Id
     private String title;
@@ -21,28 +21,56 @@ public class Movie {
     private String productionCountry;
     private Integer productionYear;
 
+//    @OneToMany(cascade = CascadeType.ALL)
+//    private List<Genre> genreTypes;
+
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Genre> genreTypes;
+    private List<Review> reviews;
 
-
-    public List<Genre> getGenreTypes() {
-        return genreTypes;
-    }
-
-    public void setGenreTypes(List<Genre> genreTypes) {
-        this.genreTypes = genreTypes;
-    }
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "movie_actor",
+            joinColumns = {@JoinColumn(name = "movie")},
+            inverseJoinColumns = {@JoinColumn(name = "actor")})
+    private List<Actor> actors = new ArrayList<>();
 
     public Movie() {
     }
 
-    public Movie(String title, String director, String productionCountry, Integer productionYear, List<Genre> genreTypes) {
+    public Movie(String title, String director, String productionCountry, Integer productionYear, List<Review> reviews) {
         this.title = title;
         this.director = director;
         this.productionCountry = productionCountry;
         this.productionYear = productionYear;
-        this.genreTypes =genreTypes;
+        this.reviews = reviews;
     }
+
+    public List<Actor> getActors() {
+        return actors;
+    }
+
+
+    public void setActors(List<Actor> actors) {
+        this.actors = actors;
+    }
+
+//    public List<Genre> getGenreTypes() {
+//        return genreTypes;
+//    }
+
+//    public void setGenreTypes(List<Genre> genreTypes) {
+//        this.genreTypes = genreTypes;
+//    }
+
+    public void addActor(Actor actor) {
+        actors.add(actor);
+        MovieDao movieDao = new MovieDao();
+        movieDao.save(this);
+    }
+
+//    public void addActor(Actor actor){
+//        actors.add(actor);
+//        actor.getMovies().add(this);
+//    }
 
     public Integer getId() {
         return id;
@@ -57,6 +85,7 @@ public class Movie {
     public void setTitle(String title) {
         this.title = title;
     }
+
     @Column(name = "Director")
     public String getDirector() {
         return director;
@@ -65,6 +94,7 @@ public class Movie {
     public void setDirector(String director) {
         this.director = director;
     }
+
     @Column(name = "ProductionCountry")
     public String getProductionCountry() {
         return productionCountry;
@@ -73,6 +103,7 @@ public class Movie {
     public void setProductionCountry(String productionCountry) {
         this.productionCountry = productionCountry;
     }
+
     @Column(name = "ProductionYear")
     public Integer getProductionYear() {
         return productionYear;
@@ -90,12 +121,12 @@ public class Movie {
                 ", director='" + director + '\'' +
                 ", productionCountry='" + productionCountry + '\'' +
                 ", productionYear=" + productionYear +
-                ", genreTypes=" + genreTypes +
+                ", reviews=" + reviews +
+                ", actors=" + actors +
                 '}';
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
-
 }
