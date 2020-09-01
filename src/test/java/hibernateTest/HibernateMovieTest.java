@@ -40,12 +40,12 @@ public class HibernateMovieTest {
        // when(sessionMock.beginTransaction()).thenReturn(transactionMock);
       //  when(sessionMock.beginTransaction()).thenThrow(new Exception("błąd"));
        // verify(transactionMock, times(1)).rollback();
-        Movie movie = new Movie(SOME_TITLE);
-        movieDao.save(movie);
-        Mockito.verify(sessionMock).saveOrUpdate(movieCaptor.capture());
-        Movie capturedMovie = movieCaptor.getValue();
-
-        assert(capturedMovie.equals(movie));
+       // Movie movie = new Movie(SOME_TITLE);
+//        movieDao.save(movie);
+//        Mockito.verify(sessionMock).saveOrUpdate(movieCaptor.capture());
+//        Movie capturedMovie = movieCaptor.getValue();
+//
+//        assert(capturedMovie.equals(movie));
     }
 
 }

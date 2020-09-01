@@ -1,10 +1,13 @@
 package entity;
 
-import dao.MovieDao;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
-import java.util.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Actor {
@@ -35,10 +38,10 @@ public class Actor {
     public Actor() {
     }
 
-    public void addMovie(Movie movie){
-        movies.add(movie);
-        movie.getActors().add(this);
-    }
+//    public void addMovie(Movie movie){
+//        movies.add(movie);
+//        movie.getActors().add(this);
+//    }
 
     public Integer getId() {
         return id;

@@ -3,6 +3,7 @@ package entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,6 +15,17 @@ public class Genre {
 
     @Enumerated(EnumType.STRING)
     private GenreType genreType;
+
+    @ManyToMany(mappedBy = "genreTypes")
+    private List<Movie> movies = new ArrayList<>();
+
+    public void setMovie(List<Movie> movie) {
+        this.movies = movie;
+    }
+
+    public List<Movie> getMovies() {
+        return movies;
+    }
 
     public Genre() {
     }

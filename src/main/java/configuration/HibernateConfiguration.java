@@ -1,10 +1,10 @@
 package configuration;
 
+import entity.Actor;
 import entity.Genre;
-import entity.GenreType;
 import entity.Movie;
+import entity.Review;
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -17,7 +17,12 @@ public class HibernateConfiguration {
             try {
                 sessionFactory = new Configuration()
                         .configure("hibernate.cfg.xml")
+                        .addAnnotatedClass(Genre.class)
+                        .addAnnotatedClass(Movie.class)
+                        .addAnnotatedClass(Actor.class)
+                        .addAnnotatedClass(Review.class)
                         .buildSessionFactory();
+
             } catch (HibernateException e) {
                 e.printStackTrace();
             }
