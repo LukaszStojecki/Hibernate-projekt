@@ -3,6 +3,10 @@ package hibernateApp;
 import dao.MovieDao;
 import entity.*;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+
 public class HibernateApplication {
 
     public static void main(String[] args) {
@@ -54,10 +58,32 @@ public class HibernateApplication {
         movieDao.save(movie1);
         movieDao.save(movie2);
 
+
+        List<Movie> movies = Arrays.asList(
+                movie1,
+                movie2,
+                movie3,
+                movie4,
+                movie5,
+                movie6,
+                movie7
+        );
+
         movieDao.readAll();
 
+        Optional<Movie> movieReviews = movies.stream()
+                .filter(r->r.getTitle().contains("Top Gun"))
+                .findAny();
 
-        //movieDao.delete("TOp");
+        if (movieReviews.isPresent()){
+            Movie movie = movieReviews.get();
+            movie.getReviews().forEach(review -> System.out.println(review.getReviewEnum()));
+        }
+
+
+        movieDao.getActorsFromMovie(actor1);
+
+       // movieDao.delete("Top Gun");
 
     }
 }

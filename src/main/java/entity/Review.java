@@ -49,4 +49,5 @@ public class Review {
     public void setReviewEnum(ReviewName reviewEnum) {
         this.reviewEnum = reviewEnum;
     }
+
 }
